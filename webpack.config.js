@@ -9,8 +9,15 @@ module.exports = {
     port:3333
   },
   module:{
-    loaders:[
-      {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel'}
-    ]
+      loaders:[
+          {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel'},
+          {
+              test: /\.s?css$/,
+              loaders: [
+                  'style?sourceMap',
+                  'typings-for-css-modules?modules&importLoaders=1&localIdentName=[local]__[hash:base64:5]&namedExport&camelCase',
+              ],
+          },
+      ]
   }
 };

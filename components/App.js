@@ -3,10 +3,11 @@
  */
 import React, {Component} from 'react';
 import CalculateWinner from './CalculateWinner';
+import * as style from './style.css';
 
 //---------------------------------------
 const Square = (props)=>(
- <button className="square" onClick={ props.onClick }> { props.value } </button>
+ <button className={style.square} onClick={ props.onClick }> { props.value } </button>
 );
 
 Square.propTypes = {
@@ -22,11 +23,19 @@ class Board extends Component {
   }
 
   render() {
-
     return (
       <div>
-        <div className="status">{status}</div>
-        <div className="board-row">
+          <div className={style.status}>{status}</div>
+
+          { [0,3,6].map(
+              (v1)=>(<div className={style.boardRow}>
+                  {[0,1,2].map((v2)=>(<Square value={this.props.squares[v1+v2]}
+                                              onClick={() => this.props.onClick(v1+v2)} />))}
+              </div>)
+          ) }
+
+
+       {/* <div className="board-row">
           {this.renderSquare(0)}
           {this.renderSquare(1)}
           {this.renderSquare(2)}
@@ -40,7 +49,8 @@ class Board extends Component {
           {this.renderSquare(6)}
           {this.renderSquare(7)}
           {this.renderSquare(8)}
-        </div>
+        </div>*/}
+
       </div>
     );
   }
@@ -93,7 +103,7 @@ class App extends Component {
       if (winner) {
           status = "Победитель: " + winner;
           return (
-              <div className="game-info">
+              <div className={style.gameInfo}>
                   <div>{status}</div>
                   <a href="#" onClick={ () => this.setState({squares: Array(9).fill(null), NextPlayer: 1}) }>
                       Начать игру </a>
@@ -103,7 +113,7 @@ class App extends Component {
       else if (this.state.squares.indexOf(null)===-1 && winner === null ){
           status = "Ничья";
           return (
-              <div className="game-info">
+              <div className={style.gameInfo}>
                   <div>{status}</div>
                   <div>Если будет 3и ничьи подряд, каждому игроку нужно будет оплатить штраф :-)</div>
                   <a href="#" onClick={ () => this.setState({squares: Array(9).fill(null), NextPlayer: 1}) }>
@@ -113,14 +123,14 @@ class App extends Component {
       }else {
           status = "Сейчас играет: " + (this.state.NextPlayer === 1 ? "X" : "O");
           return (
-              <div className="game">
-                  <div className="game-board">
+              <div className={style.game}>
+                  <div className={style.game}>
                       <Board
                           squares={curr_squares}
                           onClick={i => this.clickHandle(i)}
                       />
                   </div>
-                  <div className="game-info">
+                  <div className={style.gameInfo}>
                       <div>{status}</div>
                   </div>
               </div>
