@@ -70,7 +70,8 @@ class App extends Component {
 
         this.state = {
             squares: Array(9).fill(null),
-            NextPlayer: 1
+            NextPlayer: 1,
+            scroll_y: 0
         };
 
         //  this.clickHandle=this.clickHandle.bind(this);
@@ -89,14 +90,15 @@ class App extends Component {
 
         this.setState({
             squares: curr_squares,
-            NextPlayer: this.state.NextPlayer === 1 ? 0 : 1,
-            scroll_y: 0
+            NextPlayer: this.state.NextPlayer === 1 ? 0 : 1
         });
     }
 
     scrollHandle(e) {
-debugger;
-      this.state.scroll_y=e;
+//debugger;
+        this.setState({
+            scroll_y: e.target.body.scrollTop
+        });
     }
 
     componentDidMount() {
